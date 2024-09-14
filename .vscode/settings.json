@@ -1,0 +1,16 @@
+{
+    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+    "[python]": {
+      "editor.tabSize": 4,
+      "editor.defaultFormatter": "charliermarsh.ruff",
+      "editor.formatOnSaveMode": "file",
+      "editor.formatOnSave": true,
+      "editor.codeActionsOnSave": {
+        "source.fixAll.ruff": "explicit",
+        "source.organizeImports.ruff": "explicit"
+      }
+    },
+    "mypy-type-checker.path": ["${workspaceFolder}/.venv/bin/mypy"],
+    "ruff.path": ["${workspaceFolder}/.venv/bin/ruff"],
+    "autoDocstring.docstringFormat": "numpy"
+}
