@@ -22,3 +22,44 @@ pre-commit = "^3.8.0"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[[tool.poetry.source]]
+name = "pypi"
+priority = "primary"
+
+[tool.taskipy.tasks]
+test = "pytest"
+test-report = "pytest --cov-report=html"
+fmt = "ruff format src tests && ruff check --fix src tests"
+lint = "task lint-ruff && task lint-mypy"
+lint-ruff = "ruff check src tests"
+lint-mypy = "mypy src tests"
+
+[tool.ruff]
+target-version = "py39"
+line-length = 79
+
+[tool.ruff.lint]
+extend-select = ["I"]
+unfixable = [
+  "F401",
+  "F841",
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.mypy]
+strict = true
+warn_unreachable = true
+show_error_context = true
+show_column_numbers = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+addopts = "-s -vvv --cov=. --cov-branch"
+env = [
+  "TZ=Asia/Tokyo",
+]
+pythonpath = "src"
+testpaths = ["tests",]
