@@ -1,0 +1,106 @@
+[project]
+name = "python-project-template"
+version = "0.1.0"
+description = "Starting template for python project"
+readme = "README.md"
+requires-python = ">=3.14"
+license = "MIT"
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/yama0308/"
+Repository = "https://github.com/yama0308/python-project-template"
+
+[dependency-groups]
+dev = [
+    "poethepoet>=0.48.0",
+    "pytest>=9.1.1",
+    "pytest-cov>=7.1.0",
+    "pytest-env>=1.7.0",
+    "pytest-mock>=3.15.1",
+    "ruff>=0.16.4",
+    "ty>=0.0.73",
+]
+
+[tool.poe.tasks]
+test = "python -m pytest tests"
+test-cov = "python -m pytest tests --cov-report=html"
+fmt-ruff = "ruff format"
+fmt-ruff-check = "ruff check --fix"
+fmt = ["fmt-ruff", "fmt-ruff-check"]
+lint-ruff = "ruff check"
+lint-ty = "ty check"
+lint = ["lint-ruff", "lint-ty"]
+check = ["lint", "test"]
+
+[tool.ruff]
+target-version = "py314"
+line-length = 79
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["ALL"]
+unfixable = [
+    "F401",   # unused-import: 自動削除を防止（意図的な re-export を守る）
+    "F841",   # unused-variable: 自動削除を防止（デバッグ中の変数を守る）
+]
+ignore = [
+    "TD",     # flake8-todos: TODO の形式強制（著者・リンク必須など）
+    "FIX",    # flake8-fixme: TODO/FIXME/HACK の存在自体を検出
+    "FBT",    # flake8-boolean-trap: bool の位置引数禁止
+    "COM",    # flake8-commas: 末尾カンマ強制（ruff format と重複）
+    "PL",     # Pylint: Pylint 互換ルール全般（ノイジー）
+    "FLY",    # flynt: str.join → f-string 変換推奨
+    "ISC001", # implicit-str-concat: 暗黙の文字列結合（ruff format と競合）
+    "CPY001", # missing-copyright-notice: 著作権表示の強制
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = [
+    "F401",  # unused-import: re-export 用の import を許可
+    "D104",  # missing-docstring: package docstring 不要
+]
+"tests/**/*.py" = [
+    "S101",  # assert の使用
+    "D100",  # module docstring
+    "D101",  # class docstring
+    "D102",  # method docstring
+    "D103",  # function docstring
+    "D104",  # package docstring
+    "ARG",   # 未使用引数（fixture）
+]
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.coverage.run]
+source = ["src"]
+branch = true
+relative_files = true
+
+[tool.coverage.report]
+show_missing = true
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.:",
+    "@overload",
+    "raise NotImplementedError",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = [
+    "-s",
+    "-vv",
+    "--cov=src",
+    "--cov-branch",
+    "--cov-report=term-missing",
+]
+env = [
+    "TZ = Asia/Tokyo",
+]
+pythonpath = ["src"]

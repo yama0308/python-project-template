@@ -1,0 +1,47 @@
+{
+    // uv が作成する .venv 内の Python を使用
+    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+    "python.languageServer": "None",
+    // --- pytest ---
+    // VSCode のテストエクスプローラーで pytest を有効化
+    "python.testing.pytestEnabled": true,
+    // テストディレクトリの指定
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    // --- Python ファイル保存時の動作 ---
+    "[python]": {
+        "editor.tabSize": 4,
+        // 保存時にファイル全体をフォーマット
+        "editor.formatOnSaveMode": "file",
+        "editor.formatOnSave": true,
+        // フォーマッターとして Ruff を使用
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.codeActionsOnSave": {
+            // 保存時に Ruff の自動修正を適用
+            "source.fixAll.ruff": "explicit",
+            // 保存時に Ruff で import を整理
+            "source.organizeImports.ruff": "explicit"
+        }
+    },
+    // --- JSON ファイル保存時の動作 ---
+    "[json]": {
+        "editor.formatOnSave": true
+    },
+    // --- Ruff ---
+    // プロジェクトの .venv 内の ruff を使用（バージョン固定のため）
+    "ruff.path": [
+        "${workspaceFolder}/.venv/bin/ruff"
+    ],
+    // --- autoDocstring ---
+    // docstring のフォーマットを NumPy スタイルに設定
+    "autoDocstring.docstringFormat": "numpy",
+    // --- エクスプローラー表示 ---
+    // 不要なファイル・ディレクトリをサイドバーから非表示
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/*.pyc": true,
+        "**/.pytest_cache": true,
+        "**/.ruff_cache": true
+    }
+}
