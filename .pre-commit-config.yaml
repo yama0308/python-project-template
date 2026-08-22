@@ -1,0 +1,27 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+      - id: end-of-file-fixer
+        exclude: \.json$
+      - id: mixed-line-ending
+        args: [--fix=lf]
+      - id: check-added-large-files
+      - id: check-toml
+      - id: check-yaml
+  - repo: local
+    hooks:
+      - id: python-fmt
+        name: python format
+        entry: uv run poe fmt
+        language: system
+        types: [python]
+        pass_filenames: false
+      - id: python-lint
+        name: python lint
+        entry: uv run poe lint
+        language: system
+        types: [python]
+        pass_filenames: false
